@@ -9,56 +9,30 @@ class SimpleFile(object):
         dimension array (numbers)
         """
 
-        f = open(file_path)
-        for line in f:
-            self.numbers.append(line.strip().split(" "))
-
-
     def get_mean(self, line_number):
         """
         get_mean retrieves the mean value of the list by line_number (starts
         with zero)
         """
-        avg = 0
-        for x in self.numbers[line_number]:
-            print(x)
-            avg += x
-
-        avg = avg/len(self.numbers[line_number])
-        return avg
-
+        pass
 
     def get_max(self, line_number):
         """
         get_max retrieves the maximum value of the list by line_number (starts
         with zero)
         """
-        lineMax = 0
-        for x in self.numbers[line_number]:
-            if x > lineMax:
-                lineMax = x
-
-        return lineMax
+        pass
 
     def get_min(self, line_number):
         """
         get_min retrieves the minimum value of the list by line_number (starts
         with zero)
         """
-        lineMin = self.numbers[line_number][0]
-        for x in self.numbers[line_number]:
-            if x < lineMin:
-                lineMin = x
-
-        return lineMin
+        pass
 
     def get_sum(self, line_number):
         """
         get_sum retrieves the sumation of the list by line_number (starts with
         zero)
         """
-        lineSum = 0
-        for x in self.numbers[line_number]:
-            lineSum += x
-
-        return lineSum
+        pass
