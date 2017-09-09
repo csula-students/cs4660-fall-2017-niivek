@@ -17,15 +17,5 @@ def get_sum(li):
     pass
 
 def get_avg(li):
-    return sum(li)/(len(li)-1)
+    return sum(li)/(len(li))
     pass
-
-print(get_first_item([1,2,3,4,5,6,7]))
-
-print(get_last_item([1,2,3,4,5,6,7]))
-
-print(get_second_and_third_items([1,2,3,4,5,6,7]))
-
-print(get_sum([1,2,3,4,5,6,7]))
-
-print (get_avg([1,2,3,4,5,6,7]))
