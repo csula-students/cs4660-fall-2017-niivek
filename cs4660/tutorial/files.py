@@ -34,7 +34,7 @@ class SimpleFile(object):
         """
         lineMax = 0
         for x in self.numbers[line_number]:
-            if x > lineMax:
+            if x > int(lineMax):
                 lineMax = x
 
         return int(lineMax)
@@ -46,7 +46,7 @@ class SimpleFile(object):
         """
         lineMin = self.numbers[line_number][0]
         for x in self.numbers[line_number]:
-            if x < lineMin:
+            if x < int(lineMin):
                 lineMin = x
 
         return int(lineMin)
