@@ -32,9 +32,9 @@ class SimpleFile(object):
         get_max retrieves the maximum value of the list by line_number (starts
         with zero)
         """
-        lineMax = 0
+        lineMax = self.numbers[line_number][0]
         for x in self.numbers[line_number]:
-            if x > int(lineMax):
+            if (x > lineMax):
                 lineMax = x
 
         return int(lineMax)
@@ -46,7 +46,7 @@ class SimpleFile(object):
         """
         lineMin = self.numbers[line_number][0]
         for x in self.numbers[line_number]:
-            if x < int(lineMin):
+            if (x < lineMin):
                 lineMin = x
 
         return int(lineMin)
