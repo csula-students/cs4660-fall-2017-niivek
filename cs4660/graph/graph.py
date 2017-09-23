@@ -28,7 +28,7 @@ def construct_graph_from_file(graph, file_path):
     """
     TODO: read content from file_path, then add nodes and edges to graph object
 
-    note that graph object will be either of AdjacencyList, AdjacencyMatrix or ObjectOriented
+    note that grpah object will be either of AdjacencyList, AdjacencyMatrix or ObjectOriented
 
     In example, you will need to do something similar to following:
 
@@ -108,7 +108,6 @@ class Edge(object):
         self.from_node = from_node
         self.to_node = to_node
         self.weight = weight
-
 
     def __str__(self):
         return 'Edge(from {}, to {}, weight {})'.format(self.from_node, self.to_node, self.weight)
@@ -191,7 +190,7 @@ class AdjacencyList(object):
                                 self.adjacency_list[resetNode].append(x)
                         return True
         return False
-
+      
 class AdjacencyMatrix(object):
     def __init__(self):
         # adjacency_matrix should be a two dimensions array of numbers that
