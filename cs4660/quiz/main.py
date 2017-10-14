@@ -73,6 +73,7 @@ def BFS(start_id, finish_id):
 
         if current is destination:
             trail.append(current)
+            print('DESTINATION FOUND')
             break
 
         if not current in visited:
@@ -85,41 +86,6 @@ def BFS(start_id, finish_id):
 
     print ('VISiTED PRINT:', visited)
     result = []
-
-    # trail.reverse()
-    #
-    # trail2 = list(trail)
-    # trail2.reverse()
-    #
-    # checkNode = dest_node
-    #
-    # for node_back in trail:
-    #
-    #     reset = False
-    #
-    #     if node_back == checkNode:
-    #
-    #         for node_forward in trail2:
-    #
-    #             if reset:
-    #                 break
-    #
-    #             temp = node_forward
-    #
-    #             for node in graph.neighbors(node_forward):
-    #
-    #                 if node == node_back:
-    #
-    #                     checkNode = temp
-    #
-    #                     result.append(graph.get_edge(temp, node_back))
-    #
-    #                     reset = True
-    #                     break
-    #
-    # result.reverse()
-    #
-    # return (result)
 
     pass
 
