@@ -9,7 +9,8 @@ to f1f131f647621a4be7c71292e79613f9
 TODO: implement BFS
 TODO: implement Dijkstra utilizing the path with highest effect number
 """
-
+import Queue
+import heapq
 import json
 
 # http lib import for Python 2 and 3: alternative 4
@@ -20,6 +21,7 @@ except ImportError:
 
 GET_STATE_URL = "http://192.241.218.106:9000/getState"
 STATE_TRANSITION_URL = "http://192.241.218.106:9000/state"
+
 
 def get_state(room_id):
     """
@@ -50,8 +52,95 @@ def __json_request(target_url, body):
     response = json.load(urlopen(req, jsondataasbytes))
     return response
 
+def BFS(start_id, finish_id):
+
+    # print('neighbor loop')
+    # for neighbor in get_state(start_id)['neighbors']:
+    #     print neighbor['location']['name']
+
+
+    queue = Queue.Queue()
+    visited = []
+    trail = []
+    # visited = {}
+
+    queue.put(get_state(start_id)['id'])
+
+    while not queue.empty():
+        current = queue.get()
+
+        destination = get_state(finish_id)['id']
+
+        if current is destination:
+            trail.append(current)
+            break
+
+        if not current in visited:
+        #     visited[current] = True
+            print ('not in list: ', current)
+            visited.append(current)
+
+            for neighbor in get_state(current)['neighbors']:
+                queue.put(neighbor['id'])
+
+    print ('VISiTED PRINT:', visited)
+    result = []
+
+    # trail.reverse()
+    #
+    # trail2 = list(trail)
+    # trail2.reverse()
+    #
+    # checkNode = dest_node
+    #
+    # for node_back in trail:
+    #
+    #     reset = False
+    #
+    #     if node_back == checkNode:
+    #
+    #         for node_forward in trail2:
+    #
+    #             if reset:
+    #                 break
+    #
+    #             temp = node_forward
+    #
+    #             for node in graph.neighbors(node_forward):
+    #
+    #                 if node == node_back:
+    #
+    #                     checkNode = temp
+    #
+    #                     result.append(graph.get_edge(temp, node_back))
+    #
+    #                     reset = True
+    #                     break
+    #
+    # result.reverse()
+    #
+    # return (result)
+
+    pass
+
+def Dijkstra(art_id, finish_id):
+    print (start_id, finish_id)
+
 if __name__ == "__main__":
     # Your code starts here
+    print("BFS Path")
+
+
+    print("Dijkstra Path")
+
     empty_room = get_state('7f3dc077574c013d98b2de8f735058b4')
-    print(empty_room)
-    print(transition_state(empty_room['id'], empty_room['neighbors'][0]['id']))
+    # print(empty_room)
+
+    end_room = get_state('f1f131f647621a4be7c71292e79613f9')
+    # print(end_room)
+
+    BFS('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')
+
+    # print (transition_state('7f3dc077574c013d98b2de8f735058b4', '44dfaae131fa9d0a541c3eb790b57b00'))
+    # print(transition_state(empty_room['id'], empty_room['neighbors'][0]['id']))
+
