@@ -54,22 +54,18 @@ def __json_request(target_url, body):
 
 def BFS(start_id, finish_id):
 
-    # print('neighbor loop')
-    # for neighbor in get_state(start_id)['neighbors']:
-    #     print neighbor['location']['name']
-
-
     queue = Queue.Queue()
     visited = []
     trail = []
-    # visited = {}
+    came_from = {}
 
     queue.put(get_state(start_id)['id'])
+    came_from[get_state(start_id)['id']] = None
+
+    destination = get_state(finish_id)['id']
 
     while not queue.empty():
         current = queue.get()
-
-        destination = get_state(finish_id)['id']
 
         if current is destination:
             trail.append(current)
@@ -77,27 +73,36 @@ def BFS(start_id, finish_id):
             break
 
         if not current in visited:
-        #     visited[current] = True
-            print ('not in list: ', current)
+            print ('checking room: {}'.format(current))
             visited.append(current)
 
             for neighbor in get_state(current)['neighbors']:
-                queue.put(neighbor['id'])
+                if not neighbor['id'] in visited:
+                    queue.put(neighbor['id'])
+                    came_from[neighbor['id']] = current
 
-    print ('VISiTED PRINT:', visited)
-    result = []
+    current = get_state(finish_id)['id']
+    begin = get_state(start_id)['id']
 
-    pass
 
-def Dijkstra(art_id, finish_id):
+    while not came_from[current] is None:
+        trail.append(current)
+        current = came_from[current]
+
+    trail.append(begin)
+    trail.reverse()
+
+
+
+    return trail
+
+
+def Dijkstra(start_id, finish_id):
     print (start_id, finish_id)
+    print transition_state('7f3dc077574c013d98b2de8f735058b4', 'bc59dd94f397de7cc7eeca02752d7a15')
 
 if __name__ == "__main__":
     # Your code starts here
-    print("BFS Path")
-
-
-    print("Dijkstra Path")
 
     empty_room = get_state('7f3dc077574c013d98b2de8f735058b4')
     # print(empty_room)
@@ -105,8 +110,11 @@ if __name__ == "__main__":
     end_room = get_state('f1f131f647621a4be7c71292e79613f9')
     # print(end_room)
 
-    BFS('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')
+    # print('BFS path: {}'.format(BFS('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')))
 
+
+    print("Dijkstra Path")
+    Dijkstra('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')
     # print (transition_state('7f3dc077574c013d98b2de8f735058b4', '44dfaae131fa9d0a541c3eb790b57b00'))
     # print(transition_state(empty_room['id'], empty_room['neighbors'][0]['id']))
 
