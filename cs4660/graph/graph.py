@@ -178,7 +178,7 @@ class AdjacencyList(object):
             self.adjacency_list[edge.from_node].append(edge)
             return True
 
-    def remove_edge(self, edge):
+    def remove_edge(self,    edge):
         if edge in self.adjacency_list[edge.from_node]:
             for i in self.adjacency_list.values():
                 for j in i:
@@ -191,6 +191,25 @@ class AdjacencyList(object):
                                 self.adjacency_list[resetNode].append(x)
                         return True
         return False
+        
+    def get_edge(self, node_1, node_2):
+        if node_1 in self.adjacency_list:
+            for edge in self.adjacency_list[node_1]:
+                if edge.to_node is node_2:
+                    return edge
+
+
+    def get_weight(self, node_1, node_2):
+        if node_1 in self.adjacency_list:
+            for edge in self.adjacency_list[node_1]:
+                if edge.to_node is node_2:
+                    return edge.weight
+
+    def node_count(self):
+        return len(self.adjacency_list)
+
+    def get_nodes(self):
+        return self.adjacency_list.keys()
 
 class AdjacencyMatrix(object):
     def __init__(self):
@@ -263,6 +282,24 @@ class AdjacencyMatrix(object):
         """helper method to find node index"""
         return self.nodes.index(node)
 
+    def get_edge(self, node_1, node_2):
+        x = self.__get_node_index(node_1)
+        y = self.__get_node_index(node_2)
+        if self.adjacency_matrix[x][y] != 0:
+            return Edge(node_1, node_2, self.adjacency_matrix[x][y])
+
+    def get_weight(self, node_1, node_2):
+        x = self.__get_node_index(node_1)
+        y = self.__get_node_index(node_2)
+        if self.adjacency_matrix[x][y] != 0:
+            return Edge(node_1, node_2, self.adjacency_matrix[x][y]).weight
+
+    def node_count(self):
+        return len(self.adjacency_matrix)
+
+    def get_nodes(self):
+        return self.nodes
+
 class ObjectOriented(object):
     """ObjectOriented defines the edges and nodes as both list"""
     def __init__(self):
@@ -311,3 +348,21 @@ class ObjectOriented(object):
             return True
         return False
 
+    def get_edge(self, node_1, node_2):
+        if (node_1 in self.nodes) and (node_2 in self.nodes):
+            for i in self.edges:
+                if i.from_node == node_1:
+                    if i.to_node == node_2:
+                        return i
+
+    def get_weight(self, node_1, node_2):
+        for i in self.edges:
+            if i.from_node == node_1:
+                if i.to_node == node_2:
+                    return i.weight
+
+    def node_count(self):
+        return len(self.nodes)
+
+    def get_nodes(self):
+        return self.nodes
