@@ -92,6 +92,7 @@ def BFS(start_id, finish_id):
     trail.append(begin)
     trail.reverse()
 
+
     for i, nexti in zip(trail, trail[1::]):
         print transition_state(i, nexti)
 
@@ -99,23 +100,66 @@ def BFS(start_id, finish_id):
 
 
 def Dijkstra(start_id, finish_id):
-    print (start_id, finish_id)
-    print transition_state('7f3dc077574c013d98b2de8f735058b4', 'bc59dd94f397de7cc7eeca02752d7a15')
+
+    begin = get_state(start_id)['id']
+    destination = get_state(finish_id)['id']
+
+    heap = []
+    heapq.heappush(heap, (0, begin))
+    trail = []
+
+    came_from = {}
+    cost_so_far = {}
+
+    came_from[begin] = None
+    cost_so_far[begin] = 0
+
+    while not heap == []:
+        current = heapq.heappop(heap)
+
+        print ('checking room: {}'.format(current))
+
+        if current[-1] == destination:
+            break
+
+        for neighbor in get_state(current[-1])['neighbors']:
+            new_cost = cost_so_far[current[-1]] + transition_state(current[-1], neighbor['id'])['event']['effect']
+            # temp = transition_state(current[-1], neighbor['id'])['event']['effect']
+
+            if neighbor['id'] not in cost_so_far or new_cost > cost_so_far[neighbor['id']]:
+                if neighbor['id'] not in cost_so_far:
+                    cost_so_far[neighbor['id']] = new_cost
+                    priority = -new_cost
+                    print (priority, neighbor['id'])
+                    heapq.heappush(heap, (priority, neighbor['id']))
+                    came_from[neighbor['id']] = current[-1]
+
+    result = []
+
+    current = destination
+
+    print ('came from path')
+    trail.append(current)
+    while came_from[current] is not begin:
+        trail.append(came_from[current])
+        current = came_from[current]
+
+    trail.append(begin)
+
+    trail.reverse()
+
+    for i, nexti in zip(trail, trail[1::]):
+        print transition_state(i, nexti)
+
+    return trail
 
 if __name__ == "__main__":
     # Your code starts here
 
-    empty_room = get_state('7f3dc077574c013d98b2de8f735058b4')
-    # print(empty_room)
-
     end_room = get_state('f1f131f647621a4be7c71292e79613f9')
-    # print(end_room)
 
     print('BFS path: {}'.format(BFS('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')))
 
+    print('Dijkstra path: {}'.format(Dijkstra('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')))
 
-    print("Dijkstra Path")
-    Dijkstra('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')
-    # print (transition_state('7f3dc077574c013d98b2de8f735058b4', '44dfaae131fa9d0a541c3eb790b57b00'))
-    # print(transition_state(empty_room['id'], empty_room['neighbors'][0]['id']))
 
