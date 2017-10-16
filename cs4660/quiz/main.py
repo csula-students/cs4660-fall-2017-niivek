@@ -92,7 +92,8 @@ def BFS(start_id, finish_id):
     trail.append(begin)
     trail.reverse()
 
-
+    for i, nexti in zip(trail, trail[1::]):
+        print transition_state(i, nexti)
 
     return trail
 
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     end_room = get_state('f1f131f647621a4be7c71292e79613f9')
     # print(end_room)
 
-    # print('BFS path: {}'.format(BFS('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')))
+    print('BFS path: {}'.format(BFS('7f3dc077574c013d98b2de8f735058b4', 'f1f131f647621a4be7c71292e79613f9')))
 
 
     print("Dijkstra Path")
