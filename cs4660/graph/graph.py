@@ -195,14 +195,14 @@ class AdjacencyList(object):
     def get_edge(self, node_1, node_2):
         if node_1 in self.adjacency_list:
             for edge in self.adjacency_list[node_1]:
-                if edge.to_node is node_2:
+                if edge.to_node == node_2:
                     return edge
 
 
     def get_weight(self, node_1, node_2):
         if node_1 in self.adjacency_list:
             for edge in self.adjacency_list[node_1]:
-                if edge.to_node is node_2:
+                if edge.to_node == node_2:
                     return edge.weight
 
     def node_count(self):

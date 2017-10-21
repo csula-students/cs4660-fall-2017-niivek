@@ -49,7 +49,7 @@ def bfs(graph, initial_node, dest_node):
 				# 	found_node = True
 				# 	trail.append(node)
 				# 	break
-	print trail
+	# print trail
 	result = []
 	#create result list for final path
 
@@ -203,8 +203,55 @@ def dijkstra_search(graph, initial_node, dest_node):
 	while not heap == []:
 		current = heapq.heappop(heap)
 
-		print current[-1]
-		trail.append(current[-1])
+		if current[-1] == dest_node:
+			break
+
+		for node in graph.neighbors(current[-1]):
+			new_cost = cost_so_far[current[-1]] + graph.get_weight(current[-1], node)
+
+			if node not in cost_so_far or new_cost < cost_so_far[node]:
+				cost_so_far[node] = new_cost
+				priority = new_cost
+				heapq.heappush(heap, (priority, node))
+				came_from[node] = current[-1]
+
+	result = []
+	current = dest_node
+	trail.append(current)
+	while came_from[current] is not initial_node:
+		trail.append(came_from[current])
+		current = came_from[current]
+
+	trail.append(initial_node)
+	trail.reverse()
+
+	for i, nexti in zip(trail,trail[1::]):
+	#loop created to get current item and next item
+		result.append(graph.get_edge(i, nexti))
+		#call upon get_edge method in graph to get edge and weight
+		#input values are current edge to next edge
+
+	return(result)
+
+
+def a_star_search(graph, initial_node, dest_node):
+	"""
+	A* Search
+	uses graph to do search from the initial_node to dest_node
+	returns a list of actions going from the initial node to dest_node
+	"""
+	heap = []
+	heapq.heappush(heap, (0, initial_node))
+	trail = []
+
+	came_from = {}
+	cost_so_far = {}
+
+	came_from[initial_node] = None
+	cost_so_far[initial_node] = 0
+
+	while not heap == []:
+		current = heapq.heappop(heap)
 
 		if current[-1] == dest_node:
 			break
@@ -216,29 +263,25 @@ def dijkstra_search(graph, initial_node, dest_node):
 				cost_so_far[node] = new_cost
 				priority = new_cost
 				heapq.heappush(heap, (priority, node))
-				came_from[node] = current
+				came_from[node] = current[-1]
 
 	result = []
+	current = dest_node
+	trail.append(current)
+	while came_from[current] is not initial_node:
+		trail.append(came_from[current])
+		current = came_from[current]
 
-	print trail
-	for i, nexti in zip(trail,trail[1::]):
-	#loop created to get current item and next item
+	trail.append(initial_node)
+	trail.reverse()
 
+	for i, nexti in zip(trail, trail[1::]):
+		# loop created to get current item and next item
 		result.append(graph.get_edge(i, nexti))
-		#call upon get_edge method in graph to get edge and weight
-		#input values are current edge to next edge
+	# call upon get_edge method in graph to get edge and weight
+	# input values are current edge to next edge
 
-	print(result)
 	return (result)
-
-
-def a_star_search(graph, initial_node, dest_node):
-	"""
-	A* Search
-	uses graph to do search from the initial_node to dest_node
-	returns a list of actions going from the initial node to dest_node
-	"""
-	pass
 
 
 class Stack:
